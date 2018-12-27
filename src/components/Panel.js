@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
 import { formatMessage } from '../services/message';
+import { parseUrl } from '../services/urlParser';
 
 export default class Panel extends Component {
 
     constructor(props) {
         super(props);
+
+        const {
+            projectId,
+            reportId,
+            clientId,
+            productId,
+            query: {
+                dataset
+            }
+        } = parseUrl(props.url);
+
         this.state = {
             params: {
-                projectId: '',
-                reportId: '',
-                productId: '',
-                clientId: '',
-                dataset: '',
-                includeObjectsWithTags: '',
-                excludeObjectsWithTags: ''
-            },
-            lastQueryParams: {
-                dataset: '',
+                projectId: projectId || '',
+                reportId: reportId || '',
+                productId: productId || '',
+                clientId: clientId || '',
+                dataset: dataset || '',
                 includeObjectsWithTags: '',
                 excludeObjectsWithTags: ''
             },
@@ -54,29 +61,7 @@ export default class Panel extends Component {
     }
 
     postMessage() {
-        const {
-            dataset,
-            includeObjectsWithTags,
-            excludeObjectsWithTags
-        } = this.state.params;
-
-        // post message
         this.props.onSubmit(this.filterParams());
-
-        // save query params
-        const params = {};
-        dataset && (params['dataset'] = dataset);
-        includeObjectsWithTags && (params['includeObjectsWithTags'] = includeObjectsWithTags);
-        excludeObjectsWithTags && (params['excludeObjectsWithTags'] = excludeObjectsWithTags);
-
-        if (Object.keys(params).length > 0) {
-            this.setState({
-                lastQueryParams: {
-                    ...this.state.lastQueryParams,
-                    ...params
-                }
-            });
-        }
     }
 
     getQueryParams() {

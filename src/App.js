@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { createMessage } from './services/message';
 import Panel from './components/Panel';
-import { $panel } from './chrome/Panel';
+import { $tool } from './chrome/Tool';
 
 class App extends Component {
     constructor(props) {
@@ -11,14 +11,14 @@ class App extends Component {
     }
 
     onSubmit(data) {
-        $panel.postMessage(createMessage(data));
-        this.setState({ data: data });
+        $tool.postMessage(createMessage(data));
     }
 
     render() {
         return (
             <div className="App">
                 <Panel
+                    url={$tool.getPageUrl()}
                     onSubmit={this.onSubmit}
                 />
             </div>
