@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { formatMessage } from '../services/message';
 import { parseUrl } from '../services/urlParser';
+import Button from './Button';
 
 export default class Panel extends Component {
 
@@ -133,6 +134,11 @@ export default class Panel extends Component {
             expandQuery
         } = this.state;
 
+        const btnProps = {
+            ...this.state.params,
+            isClient
+        };
+
         return (
             <div className={'Panel'}>
                 <div className="container-fluid">
@@ -171,17 +177,23 @@ export default class Panel extends Component {
                                     <input type="text" id="reportId" className="form-control"name='reportId'
                                            onChange={this.onChange} value={reportId}/>
                                 </div>
+                                <div className="btn-action text-right d-none d-lg-block">
+                                    <Button { ...btnProps } onSubmit={this.postMessage} />
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-12 col-lg-4">
-                            <div className={'params-toggle pb-3'}>
+                            <div className={'params-toggle pb-3 d-lg-none'}>
                                 <div className={expandQuery ? 'arrow-down' : 'arrow-right'} />
                                 <button type="button" className="btn btn-link"
                                         onClick={this.toggle}>Query Params</button>
                             </div>
+                            <div className={'params-toggle d-none d-lg-flex'}>
+                                <div className={'arrow-down'} />
+                                <div>Query Params</div>
+                            </div>
                             {
-                                expandQuery &&
-                                <div className={'params-group'}>
+                                <div className={`params-group ${expandQuery ? 'd-block' : 'd-none'} d-lg-block`}>
                                     <div className="form-group">
                                         <label htmlFor="dataset">Dataset</label>
                                         <input type="text" id="dataset" className="form-control" name='dataset'
@@ -203,11 +215,8 @@ export default class Panel extends Component {
                                     </div>
                                 </div>
                             }
-                            <div className="form-group text-right">
-                                <button type="submit" className="btn btn-primary"
-                                        id={'btnPost'}
-                                        disabled={!((projectId && reportId && !isClient) || (isClient && productId && clientId && reportId))}
-                                        onClick={this.postMessage}>Post Message</button>
+                            <div className="form-group text-right d-block d-lg-none">
+                                <Button { ...btnProps } onSubmit={this.postMessage} />
                             </div>
                         </div>
                         <div className="col-md-12 col-lg-4">
