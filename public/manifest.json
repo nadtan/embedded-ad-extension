@@ -1,7 +1,7 @@
 {
   "short_name": "GDC PostMessage",
   "name": "GDC PostMessage",
-  "version":"0.0.1",
+  "version":"1.0",
   "manifest_version": 2,
   "description": "Communicate with AD by postMessage",
   "devtools_page": "index.html",
@@ -18,7 +18,10 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "content_scripts": [
-
-  ]
+  "icons": {
+    "32": "icons/gdc-32.png",
+    "48": "icons/gdc-48.png",
+    "64": "icons/gdc-64.png",
+    "128": "icons/gdc-128.png"
+  }
 }
