@@ -23,7 +23,7 @@ const extractors = {
 };
 
 function isHashWithClient(hash) {
-    return hash.startsWith('#/client');
+    return hash.startsWith('/#/client');
 }
 
 function parseQuery(hash) {
